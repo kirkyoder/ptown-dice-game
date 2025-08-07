@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danger Dice</title>
+  <style>
+    @keyframes roll {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(1080deg); }
+    }
+    body {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #fff;
+      text-shadow: 2px 2px #ff69b4;
+    }
+
+    .dice-container {
+      display: flex;
+      gap: 60px;
+      margin: 40px 0;
+    }
+
+    .scene {
+      width: 100px;
+      height: 100px;
+    }
+
+    .cube {
+      width: 100%;
+      height: 100%;
+      background: white;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border: 3px solid hotpink;
+    }
+
+    button {
+      background-color: #ff69b4;
+      color: white;
+      font-size: 20px;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ff1493;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 1px 1px #000;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎲 Danger Dice 🎲</h1>
+  <div class="dice-container">
+  <div class="scene">
+    <div id="name-cube" class="cube">
+      <div class="face">🎲</div>
+    </div>
+  </div>
+  <div class="scene">
+    <div id="action-cube" class="cube">
+      <div class="face">🎲
+    </div>
+        <div class="face right"></div>
+        <div class="face left"></div>
+        <div class="face top"></div>
+        <div class="face bottom"></div>
+      </div>
+    </div>
+    <!--<div class="scene">
+      <div id="action-cube" class="cube">
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face right"></div>
+        <div class="face left"></div>
+        <div class="face top"></div>
+        <div class="face bottom"></div>
+      </div>
+    </div>-->
+  </div>
+  <button onclick="rollDice()">✨ Roll the Dice ✨</button>
+  <div class="result" id="result"></div>
+
+  <script>
+  const diceOptions = [
+    [
+      "Bobby", "Chris Robinson", "Dan Kassa", "Darren", "Dom", "Mark", "Charles",
+      "Will Marty", "Colton", "Ashley", "Stephen", "Kirk", "Matt Falco", "Alto",
+      "Rich", "Scott Itano", "Will Marrero", "Chris B", "Sam"
+    ],
+    [
+      "compliments the most attractive person in the vicinity",
+      "asks a stranger for a makeout by the end of the night",
+      "exchanges underwear with someone of their choice",
+      "can't use pronouns for 30mins",
+      "asks a stranger to grab their balls",
+      "convinces 2 strangers to have a 3-way kiss by the end of the night",
+      "speaks to a stranger with an accent for the duration of their conversations",
+      "gets the name of a stranger's parents without disclosing involvement in the game",
+      "asks a stranger to go through their camera roll",
+      "buys a stranger a drink",
+      "airdrops their cock photo to a random person in the vicinity",
+      "buys a shot for someone of their choice"
+    ]
+  ];
+
+  const [names, actions] = diceOptions;
+
+  function rollCube(cube, value, label) {
+    const face = cube.querySelector('.face');
+    face.textContent = '🎲';
+    cube.style.animation = 'roll 1s ease';
+
+    setTimeout(() => {
+      face.textContent = `${value}`;
+      cube.setAttribute('title', label);
+      cube.style.animation = '';
+    }, 1000);
+  }
+
+  function rollDice() {
+    const nameRoll = Math.ceil(Math.random() * names.length);
+    const actionRoll = Math.ceil(Math.random() * actions.length);
+
+    rollCube(document.getElementById('name-cube'), nameRoll, names[nameRoll - 1] || '');
+    rollCube(document.getElementById('action-cube'), actionRoll, actions[actionRoll - 1] || '');
+
+    const resultText = `${names[nameRoll - 1]} ${actions[actionRoll - 1]}`;
+    document.getElementById('result').textContent = resultText;
+  }
+</script>
+
+
+
+  
+
+
+
+<div style="margin-top: 60px; display: flex; gap: 80px; justify-content: center; color: white; font-family: 'Comic Sans MS', cursive, sans-serif;">
+  <div>
+    <h2 style="text-align: center; color: #fff; text-shadow: 1px 1px #000;">Name Die</h2>
+    <table style="border-collapse: collapse; background: rgba(255, 255, 255, 0.15); border-radius: 12px; overflow: hidden;">
+      <thead style="background-color: hotpink; color: white;">
+        <tr><th style="padding: 8px 16px;">#</th><th style="padding: 8px 16px;">Name</th></tr>
+      </thead>
+      <tbody>
+        <script>
+          names.forEach((name, i) => {
+            document.write(`<tr><td style='padding: 6px 12px; border-bottom: 1px solid white;'>${i + 1}</td><td style='padding: 6px 12px; border-bottom: 1px solid white;'>${name}</td></tr>`);
+          });
+        </script>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h2 style="text-align: center; color: #fff; text-shadow: 1px 1px #000;">Action Die</h2>
+    <table style="border-collapse: collapse; background: rgba(255, 255, 255, 0.15); border-radius: 12px; overflow: hidden;">
+      <thead style="background-color: hotpink; color: white;">
+        <tr><th style="padding: 8px 16px;">#</th><th style="padding: 8px 16px;">Action</th></tr>
+      </thead>
+      <tbody>
+        <script>
+          actions.forEach((action, i) => {
+            document.write(`<tr><td style='padding: 6px 12px; border-bottom: 1px solid white;'>${i + 1}</td><td style='padding: 6px 12px; border-bottom: 1px solid white;'>${action}</td></tr>`);
+          });
+        </script>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>
